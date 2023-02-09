@@ -45,6 +45,11 @@ namespace Business.Concrete
             return _saleDal.GetSaleDetailsForCustomer(customerId);
         }
 
+        public StockInfoDTO StockCount (int productId)
+        {
+            return _saleDal.StockCountProduct(productId);
+        }
+
 
 
 

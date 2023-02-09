@@ -15,6 +15,7 @@ namespace Business.Abstract
         public Sale Get(int id);
         public List<SaleDto> GetAll();
         public List<SaleDto> getSaleDetailsForCustomer(int customerId);
+        public StockInfoDTO StockCount(int productId);
 
 
     }

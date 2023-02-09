@@ -57,5 +57,19 @@ namespace Web.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("StockProduct")]
+        public IActionResult getStockProduct(int productId)
+        {
+            try
+            {
+                var values = _saleManager.StockCount(productId);
+                return Ok(values);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

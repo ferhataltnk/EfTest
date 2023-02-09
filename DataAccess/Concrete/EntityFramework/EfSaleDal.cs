@@ -47,5 +47,22 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.Where(s=>s.CustomerId == customerId).ToList();
             }   
         }
-    } 
+
+
+        public StockInfoDTO StockCountProduct(int productId)
+        { 
+            using (var context = new Context())
+            {
+                //var totalStock = from p in context.Products where p.ProductId == productId select p.Price;
+                var soldProducts = from s in context.Sales where s.ProductId == productId select s;
+                Product product = context.Products.Where(p => p.ProductId == productId).FirstOrDefault();
+                int totalStock = (int)product.TotalStock;
+                // return  totalStock- soldProducts.Count();
+                //return new List<int>() { totalStock, soldProducts.Count(), totalStock - soldProducts.Count() };
+                return new StockInfoDTO { TotalStock = totalStock, SoldProductCount = soldProducts.Count(), LastStock = totalStock - soldProducts.Count() };
+                
+            }
+        }
+
+    }
 }
