@@ -13,7 +13,6 @@ namespace DataAccess.Abstract
     {
         public List<SaleDto> getSaleDetails();
         List<SaleDto> GetSaleDetailsForCustomer(int customerId);
-
         public StockInfoDTO StockCountProduct (int productId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -10,14 +11,21 @@ namespace Web.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        ProductManager _productManager = new ProductManager(new EfProductDal());
+      //  ProductManager _productManager = new ProductManager(new EfProductDal());
+        IProductService _productService;
+
+        public ProductController(IProductService productService)
+        {
+            _productService = productService;
+        }
 
         [HttpPost("Add")]
         public IActionResult Add(Product product)
         {
             try
             {
-                _productManager.Add(product);
+                //_productManager.Add(product);
+                _productService.Add(product);
                 return Ok();
             }
             catch
@@ -33,7 +41,8 @@ namespace Web.Controllers
         {
             try
             {
-                _productManager.Delete(id);
+               // _productManager.Delete(id);
+                _productService.Delete(id);
                 return Ok();
             }
             catch
@@ -51,7 +60,8 @@ namespace Web.Controllers
         {
             try
             {
-                var value = _productManager.GetbyPrice(_minPrice, _maxPrice);
+               // var value = _productManager.GetbyPrice(_minPrice, _maxPrice);
+                var value = _productService.GetbyPrice(_minPrice, _maxPrice);
                 return Ok(value);
             }
             catch
@@ -67,7 +77,9 @@ namespace Web.Controllers
         {
             try
             {
-                _productManager.Update(product);
+                // _productManager.Update(product);
+                _productService.Update(product);
+
                 return Ok();
             }
             catch

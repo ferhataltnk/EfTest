@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -10,14 +11,22 @@ namespace Web.Controllers
     [ApiController]
     public class SaleController : ControllerBase
     {
-        SaleManager _saleManager = new SaleManager(new EfSaleDal());
+
+
+        // SaleManager _saleManager = new SaleManager(new EfSaleDal());
+        ISaleService _saleService;
+
+        public SaleController(ISaleService saleService)
+        {
+            _saleService = saleService;
+        }
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             try
             {
-                var values = _saleManager.GetAll();
+                var values = _saleService.GetAll();
                 return Ok(values);
             }
             catch
@@ -34,7 +43,7 @@ namespace Web.Controllers
         {
             try
             {
-                _saleManager.Add(sale);
+                _saleService.Add(sale);
                 return Ok();
             }
             catch
@@ -49,7 +58,7 @@ namespace Web.Controllers
         {
             try
             {
-                var values = _saleManager.getSaleDetailsForCustomer(customerId);
+                var values = _saleService.getSaleDetailsForCustomer(customerId);
                 return Ok(values);
             }
             catch
@@ -63,7 +72,7 @@ namespace Web.Controllers
         {
             try
             {
-                var values = _saleManager.StockCount(productId);
+                var values = _saleService.StockCount(productId);
                 return Ok(values);
             }
             catch

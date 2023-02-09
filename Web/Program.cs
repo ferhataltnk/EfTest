@@ -1,4 +1,10 @@
+using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -7,6 +13,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//IOC / Dependency Injection
+builder.Services.AddSingleton<IProductService,ProductManager>();
+builder.Services.AddSingleton<IProductDal,EfProductDal>();
+
+builder.Services.AddSingleton<ICategoryService,CategoryManager>();
+builder.Services.AddSingleton<ICategoryDal,EfCategoryDal>();
+
+builder.Services.AddSingleton<ISaleService,SaleManager>();
+builder.Services.AddSingleton<ISaleDal, EfSaleDal>();
+
+/*  KENDÝME NOT!
+ //singleton tek bir nesne oluþturur.Her çaðýrýldýðýnda ayný nesne çaðýrýlýr.Singleton pattern design ile ayný...
+ //transient ??
+ //scoped ??   
+
+  builder.Services..AddTransient<ISaleService,SaleManager>();
+  builder.Services..AddTransient<ISaleService,SaleManager>();
+
+  builder.Services.AddScoped<ISaleService,SaleManager>();
+  builder.Services.AddScoped<ISaleService,SaleManager>();
+ 
+ */
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
