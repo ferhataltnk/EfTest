@@ -32,7 +32,7 @@ namespace Business.Concrete
 
         public List<Product> GetbyPrice(int _minPrice,int _maxPrice)
         {
-            return _productDal.GetAll(p => p.Price > _minPrice && p.Price <= _maxPrice);
+            return _productDal.GetAll(p => p.Price > _minPrice && p.Price <= _maxPrice); 
         }
 
         public void Update(Product product)

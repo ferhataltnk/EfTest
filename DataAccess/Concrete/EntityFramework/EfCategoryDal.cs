@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var values = from p in context.Products
                              join c in context.Categories
                 on p.CategoryId equals c.CategoryId
-                             select new CategoryDetailDto
+                             select new CategoryDetailDto 
                              {
                                  CategoryName = c.CategoryName,
                                  ProductName = p.ProductName,

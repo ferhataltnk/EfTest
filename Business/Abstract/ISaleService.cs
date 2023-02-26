@@ -13,7 +13,7 @@ namespace Business.Abstract
     {
         public void Add(Sale sale);
         public Sale Get(int id);
-        public List<SaleDto> GetAll();
+        public List<SaleDto> GetAll(int page);
         public List<SaleDto> getSaleDetailsForCustomer(int customerId);
         public StockInfoDTO StockCount(int productId);
 

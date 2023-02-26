@@ -32,9 +32,9 @@ namespace Business.Concrete
 
 
         //Tüm satış bilgilerini getir
-        public List<SaleDto> GetAll()
+        public List<SaleDto> GetAll(int page)
         {
-            return _saleDal.getSaleDetails();
+            return _saleDal.getSaleDetails(page);
         }
 
 

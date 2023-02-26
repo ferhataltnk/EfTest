@@ -22,11 +22,11 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int page)
         {
             try
             {
-                var values = _saleService.GetAll();
+                var values = _saleService.GetAll(page);
                 return Ok(values);
             }
             catch

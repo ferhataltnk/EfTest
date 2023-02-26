@@ -11,7 +11,7 @@ namespace DataAccess.Abstract
 {
     public interface ISaleDal:IGenericDal<Sale> 
     {
-        public List<SaleDto> getSaleDetails();
+        public List<SaleDto> getSaleDetails(int page);
         List<SaleDto> GetSaleDetailsForCustomer(int customerId);
         public StockInfoDTO StockCountProduct (int productId);
     }

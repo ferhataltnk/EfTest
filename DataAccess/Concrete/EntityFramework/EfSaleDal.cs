@@ -2,10 +2,12 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,19 +15,29 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfSaleDal : EfGenericDal<Sale,Context>, ISaleDal
     {
-        public List<SaleDto> getSaleDetails()
+        public List<SaleDto> getSaleDetails(int page)
         {
             using (var context = new Context())
             {
                 var result = from p in context.Products
                              join s in context.Sales on p.ProductId equals s.ProductId
                              join c in context.Customers on s.CustomerId equals c.CustomerId
-                             select new SaleDto
+                             orderby(p.ProductName)
+                             select new SaleDto 
                              {
+                                 CustomerId=c.CustomerId,
                                  CustomerName = c.CustomerName,
                                  ProductName = p.ProductName
                              };
-                return result.ToList();
+                
+              
+                    var pageResults = 4f;
+                    var pageCount = Math.Ceiling(context.Sales.Count() / pageResults);
+               
+
+                return result.Skip((page -1)*(int)pageResults)
+                    .Take((int)pageResults)
+                    .ToList();   //pagination Skip(),Take()
             }
 
         }
@@ -44,7 +56,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CustomerName = c.CustomerName,
                                  ProductName = p.ProductName
                              } ;
-                return result.Where(s=>s.CustomerId == customerId).ToList();
+                return result.Where(s=>s.CustomerId == customerId).Take(2).ToList();   // Take(2 ) pagination
             }   
         }
 
